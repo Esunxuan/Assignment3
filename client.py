@@ -16,3 +16,7 @@ def send_request(sock, line):
     else:
         print(f"Invalid line: {line.strip()}")
         return
+    
+    
+    full_msg = f"{len(cmd)+4:03d} {cmd}"
+    sock.sendall(full_msg.encode())
