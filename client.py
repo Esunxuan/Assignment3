@@ -20,3 +20,5 @@ def send_request(sock, line):
     
     full_msg = f"{len(cmd)+4:03d} {cmd}"
     sock.sendall(full_msg.encode())
+    response = sock.recv(1024).decode().strip()
+    print(f"{line.strip()}: {response[4:]}")
