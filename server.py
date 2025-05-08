@@ -63,3 +63,19 @@ def handle_client(conn):
             conn.sendall((length + " " + response).encode())
     finally:
         conn.close()
+
+def main():
+    port = int(input("Enter port (e.g. 51234): "))
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server.bind(('localhost', port))
+    server.listen()
+    print(f"🌟 Server is running on port {port}...")
+
+    threading.Thread(target=log_stats, daemon=True).start()
+
+    while True:
+        conn, _ = server.accept()
+        threading.Thread(target=handle_client, args=(conn,), daemon=True).start()
+
+if __name__ == '__main__':
+    main()
