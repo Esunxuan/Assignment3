@@ -18,3 +18,9 @@ def log_stats():
             print(f"--- Server Stats ---")
             print(f"Tuples: {n}, Avg Key: {avg_key:.2f}, Avg Val: {avg_val:.2f}")
             print(f"Clients: {clients_connected}, Ops: {total_ops}")
+
+
+def handle_client(conn):
+    global clients_connected
+    with lock:
+        clients_connected += 1
