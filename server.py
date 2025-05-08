@@ -50,3 +50,12 @@ def handle_client(conn):
                     else:
                         response = f"ERR {key} does not exist"
                         total_ops['ERR'] += 1
+                elif cmd == 'P':
+                    key, val = rest.split(" ", 1)
+                    if key in tuple_space:
+                        response = f"ERR {key} already exists"
+                        total_ops['ERR'] += 1
+                    else:
+                        tuple_space[key] = val
+                        response = f"OK ({key}, {val}) added"
+                        total_ops['PUT'] += 1
