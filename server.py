@@ -59,3 +59,7 @@ def handle_client(conn):
                         tuple_space[key] = val
                         response = f"OK ({key}, {val}) added"
                         total_ops['PUT'] += 1
+            length = str(len(response) + 4).zfill(3)
+            conn.sendall((length + " " + response).encode())
+    finally:
+        conn.close()
