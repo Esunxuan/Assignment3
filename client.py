@@ -1,4 +1,4 @@
-python# client.py
+# client.py
 import socket
 import sys
 
@@ -22,3 +22,22 @@ def send_request(sock, line):
     sock.sendall(full_msg.encode())
     response = sock.recv(1024).decode().strip()
     print(f"{line.strip()}: {response[4:]}")
+
+def main():
+    if len(sys.argv) != 4:
+        print("Usage: python client.py <host> <port> <request_file>")
+        return
+
+    host = sys.argv[1]
+    port = int(sys.argv[2])
+    file = sys.argv[3]
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host, port))
+        with open(file, 'r') as f:
+            for line in f:
+                if line.strip():
+                    send_request(s, line)
+
+if __name__ == "__main__":
+    main()    
