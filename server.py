@@ -24,3 +24,9 @@ def handle_client(conn):
     global clients_connected
     with lock:
         clients_connected += 1
+    try:
+        while data := conn.recv(1024):
+            msg = data.decode().strip()
+            cmd = msg[4]  # R, G, P
+            rest = msg[6:]
+            response = ""
