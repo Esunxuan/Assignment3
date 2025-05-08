@@ -30,3 +30,14 @@ def handle_client(conn):
             cmd = msg[4]  # R, G, P
             rest = msg[6:]
             response = ""
+
+            with lock:
+                if cmd == 'R':
+                    key = rest
+                    if key in tuple_space:
+                        val = tuple_space[key]
+                        response = f"OK ({key}, {val}) read"
+                        total_ops['READ'] += 1
+                    else:
+                        response = f"ERR {key} does not exist"
+                        total_ops['ERR'] += 1
