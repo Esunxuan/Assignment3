@@ -41,3 +41,12 @@ def handle_client(conn):
                     else:
                         response = f"ERR {key} does not exist"
                         total_ops['ERR'] += 1
+                elif cmd == 'G':
+                    key = rest
+                    if key in tuple_space:
+                        val = tuple_space.pop(key)
+                        response = f"OK ({key}, {val}) removed"
+                        total_ops['GET'] += 1
+                    else:
+                        response = f"ERR {key} does not exist"
+                        total_ops['ERR'] += 1
